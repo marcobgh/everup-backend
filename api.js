@@ -4,7 +4,7 @@ import axios from 'axios';
 import cors from '@fastify/cors'
 
 const server = Fastify()
-const PORT = 5001
+const PORT = process.env.PORT || 5001;
 
 
 await server.register(cors, {
@@ -138,7 +138,7 @@ server.post('/consult/all', async (req, res) => {
     return res.status(200).send("Atualização concluída");
 })
 
-server.listen({ port: PORT })
+server.listen({  port: PORT, host: "0.0.0.0" })
     .then(() => console.log(`🚀 Server running on port ${PORT}`))
     .catch(err => {
         console.error(err)
