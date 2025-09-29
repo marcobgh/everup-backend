@@ -8,8 +8,18 @@ const PORT = process.env.PORT || 5001;
 
 
 await server.register(cors, {
-    origin: "http://localhost:5173", 
-    methods: ["GET", "POST", "PUT", "DELETE"], 
+    origin: (origin, cb) => {
+        const allowedOrigins = [
+            'http://localhost:5173',
+            'https://ever-up.netlify.app'
+        ]
+        if (!origin || allowedOrigins.includes(origin)) {
+            cb(null, true)
+        } else {
+            cb(new Error("Not allowed by CORS"))
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 });
 
